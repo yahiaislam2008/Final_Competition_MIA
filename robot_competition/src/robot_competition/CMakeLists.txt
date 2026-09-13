@@ -11,20 +11,22 @@ find_package(rclpy REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(action_msgs REQUIRED)
 
-# Generate custom action interfaces
-rosidl_generate_interfaces(${PROJECT_NAME}
-  "action/MoveX.action"
-  "action/MoveY.action"
-  "action/Yaw.action"
-  DEPENDENCIES action_msgs
-)
-
 # Install Python scripts
 install(PROGRAMS
   src/control.py
   DESTINATION lib/${PROJECT_NAME}
   RENAME controller_node
 )
+install(PROGRAMS
+  src/scroll_detection_node.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME camera_node
+)
+
+install(DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
